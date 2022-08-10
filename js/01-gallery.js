@@ -5,42 +5,44 @@ console.log(galleryItems);
 const gallery = document.querySelector('.gallery');
 const items = [];
 
-galleryItems.forEach(elem => {
-  const galleryItem = document.createElement('div');
-  galleryItem.classList = 'gallery__item';
-  const galleryLink = document.createElement('a');
-  galleryLink.classList = 'gallery__link';
-  galleryLink.href = 'elem.original';
-  const galleryImg = document.createElement('img');
-  galleryImg.classList = 'gallery__image';
-  galleryImg.src = elem.preview;
-  galleryImg.hasAttribute('data-source', elem.original);
-  galleryImg.alt = elem.description;
+galleryItems.forEach(element => {
+	const galleryItem = document.createElement('div');
+	galleryItem.className = 'gallery__item';
+	const galleryLink = document.createElement('a');
+	galleryLink.className = 'gallery__link';
+	galleryLink.href = element.original;
+	const galleryImage = document.createElement('img');
+    galleryImage.className = 'gallery__image';
+    galleryImage.src = element.preview;;
+    galleryImage.setAttribute('data-source', element.original);
+    galleryImage.alt = element.description;
 
-  galleryItem.append(galleryLink);
-  galleryLink.append(galleryImg);
-  items.push(galleryItem);
-});
+	galleryItem.append(galleryLink);
+	galleryLink.append(galleryImage);
+	items.push(galleryItem);
+})
 
 gallery.append(...items);
 
-gallery.addEventListener('click', eve => {
-    eve.preventDefault();
-    if (eve.target.nodeName !== 'IMG') {
-  return
-}
+gallery.addEventListener('click', e => {
+    e.preventDefault();
+    if (e.target.nodeName !== 'IMG') {
+		return
+	}
 
-    const selectedImage = eve.target.getAttribute('data-source')
+    const selectedImage = e.target.getAttribute('data-source');
 
     const instance = basicLightbox.create(`
     <img src="${selectedImage}" width="800" height="600">
 `)
 
-    instance.show()
+    instance.show();
     
-    gallery.addEventListener('keydown', eve => {
-    if (eve.key === 'Escape') {
-    instance.close()
-    }
-  })
+    gallery.addEventListener('keydown', e => {
+		if (e.key === 'Escape') {
+			instance.close();
+		}
+	})
 })
+
+
